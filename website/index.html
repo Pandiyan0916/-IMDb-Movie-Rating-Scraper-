@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinePulse 250 | The Top Movies Visual Observatory</title>
+  <meta name="description" content="An interactive, cinematic data visualization observatory for IMDb's Top 250 movies. Explore rankings, ratings, decades, and analytics.">
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Aurora Glow Canvas / Background -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="mainNavbar">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-orb">
+          <span class="orb-core"></span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">CINEPULSE</span>
+          <span class="brand-badge">OBSERVATORY</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#visualsSection" class="nav-link active">Analytics</a>
+        <a href="#catalogSection" class="nav-link">Top 250 Catalog</a>
+        <a href="#insightsSection" class="nav-link">Era Insights</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="surpriseBtn" class="btn btn-glow" title="Pick a random film">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+            <circle cx="8" cy="8" r="1.5" fill="currentColor"></circle>
+            <circle cx="16" cy="16" r="1.5" fill="currentColor"></circle>
+            <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+          </svg>
+          <span>Surprise Me</span>
+        </button>
+
+        <button id="favoritesFilterBtn" class="btn btn-glass" title="Toggle Watchlist">
+          <svg class="icon icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span id="favCountBadge" class="badge-count">0</span>
+        </button>
+
+        <label for="csvFileInput" class="btn btn-glass file-upload-btn" title="Upload new scraped CSV">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span>Load CSV</span>
+          <input type="file" id="csvFileInput" accept=".csv" style="display:none;">
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="main-content">
+    <section class="hero-section">
+      <div class="hero-badge-pill">
+        <span class="pulsing-dot"></span>
+        <span>LIVE AUTOMATED DATASET &bull; SCRAPED TOP 250</span>
+      </div>
+      
+      <h1 class="hero-title">
+        A Curated Universe of <br>
+        <span class="gradient-text">Cinema's Greatest Stories</span>
+      </h1>
+      
+      <p class="hero-subtitle">
+        Explore ranking trends, rating densities, and epoch milestones extracted in real-time with Python &amp; Selenium automation.
+      </p>
+
+      <!-- Key Metric Indicators -->
+      <div class="metrics-grid">
+        <div class="metric-card glass-panel">
+          <div class="metric-icon metric-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-value" id="statTotalMovies">250</span>
+            <span class="metric-label">Masterpieces Listed</span>
+          </div>
+        </div>
+
+        <div class="metric-card glass-panel">
+          <div class="metric-icon metric-cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-value" id="statAvgRating">8.31</span>
+            <span class="metric-label">Mean Rating (out of 10)</span>
+          </div>
+        </div>
+
+        <div class="metric-card glass-panel">
+          <div class="metric-icon metric-amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-value" id="statYearSpan">1921 - 2026</span>
+            <span class="metric-label">Century Span (105 Years)</span>
+          </div>
+        </div>
+
+        <div class="metric-card glass-panel">
+          <div class="metric-icon metric-emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-value" id="statTopRankTitle">The Shawshank Redemption</span>
+            <span class="metric-label">Reigning #1 Masterpiece (9.3)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visualizations & Analytics Deck -->
+    <section class="visuals-section" id="visualsSection">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">CINEMATIC PATTERNS</span>
+          <h2 class="section-heading">Observatory Analytics</h2>
+        </div>
+        <p class="section-subtext">Interactive breakdown of release epochs, rating density, and content certifications.</p>
+      </div>
+
+      <div class="charts-row">
+        <!-- Decade Timeline Chart -->
+        <div class="chart-panel glass-panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Production Volume by Decade</h3>
+              <p class="panel-hint">Click any decade column below to filter the catalog</p>
+            </div>
+            <button id="resetChartFilterBtn" class="chart-reset-btn" style="display:none;">Clear Filter</button>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="decadeChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Rating Distribution Histogram -->
+        <div class="chart-panel glass-panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Rating Density Spectrum</h3>
+              <p class="panel-hint">Frequency distribution of IMDb score tiers (8.0 - 9.3)</p>
+            </div>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="ratingChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Certificate Donut / Rings -->
+        <div class="chart-panel glass-panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Content Certification Share</h3>
+              <p class="panel-hint">Classification breakdown across Top 250 films</p>
+            </div>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="certChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catalog Control Bar & Filters -->
+    <section class="catalog-section" id="catalogSection">
+      <div class="section-header">
+        <div>
+          <span class="section-tag">INTERACTIVE ARCHIVE</span>
+          <h2 class="section-heading">Browse Filmography</h2>
+        </div>
+        <div class="catalog-meta">
+          <span id="resultsCount">Showing 250 movies</span>
+          <button id="exportCsvBtn" class="btn btn-outline" title="Export currently filtered view">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Export View to CSV</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Console -->
+      <div class="controls-console glass-panel">
+        <!-- Search Input -->
+        <div class="search-box">
+          <svg class="icon search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search by title or release year (Press '/' to focus)..." autocomplete="off">
+          <button id="clearSearchBtn" class="clear-btn" style="display:none;">&times;</button>
+        </div>
+
+        <!-- Filter Row -->
+        <div class="filter-controls-row">
+          <!-- Era / Epoch Pills -->
+          <div class="filter-group">
+            <span class="filter-label">Cinematic Era:</span>
+            <div class="filter-pills" id="eraPillsContainer">
+              <button class="pill active" data-era="all">All Eras</button>
+              <button class="pill" data-era="classic">Golden Classics (&le;1960)</button>
+              <button class="pill" data-era="vintage">Vintage Era (1961-1989)</button>
+              <button class="pill" data-era="modern">Modern Age (1990-2009)</button>
+              <button class="pill" data-era="contemporary">Contemporary (2010+)</button>
+            </div>
+          </div>
+
+          <!-- Content Rating Chips -->
+          <div class="filter-group">
+            <span class="filter-label">Certification:</span>
+            <div class="filter-pills" id="certPillsContainer">
+              <button class="pill active" data-cert="all">All</button>
+              <button class="pill" data-cert="R">R</button>
+              <button class="pill" data-cert="PG-13">PG-13</button>
+              <button class="pill" data-cert="PG">PG</button>
+              <button class="pill" data-cert="Approved">Approved</button>
+              <button class="pill" data-cert="Not Rated">Not Rated</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sliders and Sorts Row -->
+        <div class="sort-slider-row">
+          <!-- Rating Slider -->
+          <div class="slider-group">
+            <div class="slider-header">
+              <span class="filter-label">Min IMDb Score:</span>
+              <span class="slider-val" id="minRatingVal">8.0</span>
+            </div>
+            <input type="range" id="ratingRange" min="8.0" max="9.3" step="0.1" value="8.0">
+          </div>
+
+          <!-- Sort Select -->
+          <div class="select-group">
+            <span class="filter-label">Sort By:</span>
+            <select id="sortSelect" class="custom-select">
+              <option value="rank-asc">Official Rank (1 &rarr; 250)</option>
+              <option value="rank-desc">Official Rank (250 &rarr; 1)</option>
+              <option value="rating-desc">Rating: Highest First</option>
+              <option value="rating-asc">Rating: Lowest First</option>
+              <option value="year-desc">Release Year: Newest First</option>
+              <option value="year-asc">Release Year: Oldest First</option>
+              <option value="title-asc">Title: A &rarr; Z</option>
+            </select>
+          </div>
+
+          <!-- View Mode Toggle -->
+          <div class="view-toggle-group">
+            <button id="viewGridBtn" class="toggle-btn active" title="Grid View">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            </button>
+            <button id="viewTableBtn" class="toggle-btn" title="Table View">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movie Card Grid View -->
+      <div class="movies-grid" id="moviesGrid"></div>
+
+      <!-- Movie Table View (Alternative) -->
+      <div class="table-container glass-panel" id="tableContainer" style="display:none;">
+        <table class="movies-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Rank</th>
+              <th>Title</th>
+              <th>Year</th>
+              <th>IMDb Score</th>
+              <th>Duration</th>
+              <th>Certificate</th>
+              <th>Votes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-icon">🎬</div>
+        <h3>No Masterpieces Match Your Filters</h3>
+        <p>Try resetting the search terms, era chips, or lowering the minimum rating slider.</p>
+        <button id="resetAllFiltersBtn" class="btn btn-glow">Reset All Filters</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Movie Detail Modal -->
+  <div class="modal-overlay" id="movieModal" style="display:none;">
+    <div class="modal-card glass-panel">
+      <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Surprise Film Pick Modal -->
+  <div class="modal-overlay" id="surpriseModal" style="display:none;">
+    <div class="modal-card surprise-card glass-panel">
+      <div class="surprise-header">
+        <span class="pulsing-badge">🎲 RANDOM OBSERVER SELECTION</span>
+        <h2>Your Curated Feature</h2>
+      </div>
+      <div id="surpriseModalContent"></div>
+      <div class="surprise-actions">
+        <button id="rollAgainBtn" class="btn btn-outline">Roll Another Film</button>
+        <button id="closeSurpriseBtn" class="btn btn-glow">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Embedded Data Script -->
+  <script src="data.js"></script>
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

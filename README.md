@@ -12,6 +12,7 @@ An automated, reliable, and beginner-friendly web scraping tool built with **Pyt
 ## 📌 Table of Contents
 - [Project Overview](#-project-overview)
 - [Key Features](#-key-features)
+- [Custom Interactive Web Observatory](#-custom-interactive-web-observatory)
 - [System Architecture & Workflow](#-system-architecture--workflow)
 - [How Technologies Work Together](#-how-technologies-work-together)
 - [Directory Structure](#-directory-structure)
@@ -54,6 +55,39 @@ This project implements an automated, robust web scraper using **Selenium WebDri
 7. **Comprehensive Error Handling & Safe Cleanup**
    - Uses `try...finally` resource cleanup so Chrome and ChromeDriver processes never hang in memory.
    - Anti-bot stealth headers and automation masking (`navigator.webdriver` CDP overrides).
+8. **Custom CinePulse 250 Web Observatory**
+   - A dedicated interactive website that visualizes the entire scraped dataset without copying IMDb's theme.
+   - Cosmic obsidian aesthetic with ambient bioluminescent glows, frosted glass cards, and modern typography (`Syne` & `Outfit`).
+   - Interactive Decade Bar Chart, Rating Histogram, Certification Donut Chart, and Watchlist system.
+
+---
+
+## 🌌 Custom Interactive Web Observatory
+
+Included in the [`website/`](file:///C:/Users/pandi/.gemini/antigravity-ide/scratch/IMDb-Movie-Rating-Scraper/website) directory is a custom, standalone web application built from scratch to visualize the scraped Top 250 movies:
+
+### 🌟 Observatory Highlights
+- **Unique Theme**: Deep midnight obsidian space (`#07090E`), translucent glass cards (`backdrop-filter: blur(16px)`), radiant neon aurora glows, and holographic badges (no generic IMDb yellow boxes).
+- **Interactive Analytics Deck**:
+  - **Decade Timeline Chart**: Click any decade bar to filter movies from that era immediately.
+  - **Rating Density Spectrum**: Visual distribution histogram of scores from 8.0 to 9.3.
+  - **Certification Donut Ring**: Live share of R, PG-13, PG, and Approved films.
+- **Dynamic Control Deck**:
+  - Live instant search (press `/` to focus).
+  - Era chips: *All Eras*, *Golden Classics (<=1960)*, *Vintage (1961-1989)*, *Modern (1990-2009)*, *Contemporary (2010+)*.
+  - Rating threshold range slider with real-time score filtering.
+  - Grid View vs. Compact Table View toggle.
+  - Watchlist system (starred movies saved to browser `localStorage`).
+  - **"Surprise Me"** random movie picker with modal animation.
+  - **CSV Sync & Re-Export**: Load any updated scrape CSV or export your filtered view on the fly.
+
+### 🌐 How to Launch the Web Observatory
+From the project folder, simply open [`website/index.html`](file:///C:/Users/pandi/.gemini/antigravity-ide/scratch/IMDb-Movie-Rating-Scraper/website/index.html) directly in any web browser, or run:
+```powershell
+# Open via Python's built-in web server:
+python -m http.server 8080 --directory website
+```
+Then visit **`http://localhost:8080`** in your browser.
 
 ---
 
