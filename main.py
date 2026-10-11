@@ -478,6 +478,12 @@ def main():
         help="Optionally scrape Director and Cast from individual movie pages"
     )
     parser.add_argument(
+        "--preview",
+        type=int,
+        default=50,
+        help="Number of scraped movie records to preview in console (default: 50)"
+    )
+    parser.add_argument(
         "--output",
         type=str,
         default=os.path.join("output", "imdb_top_250_movies.csv"),
@@ -522,11 +528,14 @@ def main():
     # Display Statistical Insights
     display_statistics(df)
 
-    # Display Preview of Scraped Records
-    print("--- First 5 Records Sample ---")
-    cols_to_show = [c for c in ["Rank", "Title", "Release_Year", "IMDb_Rating", "Duration"] if c in df.columns]
-    print(df[cols_to_show].head(5).to_string(index=False))
+    # Display Preview of Scraped Records (Default: 50 movies)
+    preview_count = min(max(args.preview, 1), len(df))
+    print(f"\n--- Top {preview_count} Movies Preview (from {len(df)} Total Scraped) ---")
+    cols_to_show = [c for c in ["Rank", "Title", "Release_Year", "IMDb_Rating", "Duration", "Content_Rating"] if c in df.columns]
+    with pd.option_context("display.max_rows", preview_count + 10, "display.max_columns", None, "display.width", 1000):
+        print(df[cols_to_show].head(preview_count).to_string(index=False))
     print(f"\nExecution completed successfully in {elapsed_time:.2f} seconds.")
+    print(f"Full dataset containing all {len(df)} movies is saved to: {output_path}")
 
 
 if __name__ == "__main__":
