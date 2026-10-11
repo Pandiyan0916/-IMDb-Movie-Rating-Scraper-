@@ -484,12 +484,12 @@ function drawCertificateChart() {
 
   // Center text
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 14px Syne';
+  ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('TOP 250', centerX, centerY - 8);
   ctx.fillStyle = '#94a3b8';
-  ctx.font = '500 10px Outfit';
+  ctx.font = '600 10px Outfit';
   ctx.fillText('RATINGS', centerX, centerY + 10);
 
   // Legend on right
@@ -640,7 +640,7 @@ function rollSurpriseMovie() {
    -------------------------------------------------------------------------- */
 function loadFavorites() {
   try {
-    const saved = localStorage.getItem('cinepulse_favorites');
+    const saved = localStorage.getItem('getmovies_favorites') || localStorage.getItem('cinepulse_favorites');
     if (saved) {
       favorites = new Set(JSON.parse(saved));
     }
@@ -658,7 +658,7 @@ function toggleFavorite(id) {
     favorites.add(id);
     showToast('Saved to Watchlist');
   }
-  localStorage.setItem('cinepulse_favorites', JSON.stringify(Array.from(favorites)));
+  localStorage.setItem('getmovies_favorites', JSON.stringify(Array.from(favorites)));
   updateFavoritesBadge();
 }
 
@@ -693,7 +693,7 @@ function exportFilteredToCSV() {
   const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(rows.join('\n'));
   const link = document.createElement('a');
   link.setAttribute('href', csvContent);
-  link.setAttribute('download', `cinepulse_top_movies_${new Date().toISOString().slice(0, 10)}.csv`);
+  link.setAttribute('download', `getmovies_top_250_${new Date().toISOString().slice(0, 10)}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
